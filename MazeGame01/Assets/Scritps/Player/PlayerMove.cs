@@ -6,7 +6,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
 
     //[Header("Movement Parameters : ")]
-    private const float _MOVEMENT_SPEED = 3.0f;
+    private const float _MOVEMENT_SPEED = 5.0f;
 
     public void MovePlayerByDirection(Vector2 dir)
     {

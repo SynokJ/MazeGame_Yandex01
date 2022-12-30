@@ -3,6 +3,9 @@ using UnityEngine;
 public class MazeGenerator : MonoBehaviour
 {
     [Header("Maze Components: ")]
+    [SerializeField] private GameObject _wallHorizontal;
+    [SerializeField] private GameObject _wallVertical;
+
     [SerializeField] private GameObject _wallPref;
     [SerializeField] private GameObject _wallParent;
 
@@ -20,7 +23,8 @@ public class MazeGenerator : MonoBehaviour
     public void GenerateMazeBasic()
     {
         _maze = new Maze();
-        _maze.InitData(_wallPref, _wallParent.transform);
+        //_maze.InitData(_wallPref, _wallParent.transform);
+        _maze.InitDataWithWalls(_wallHorizontal, _wallVertical, _wallParent.transform);
 
         _wallParent.transform.localScale *= _MAZE_SCALE;
     }
