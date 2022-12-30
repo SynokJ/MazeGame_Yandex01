@@ -59,7 +59,7 @@ public class Cell
 
     private float _wallSize;
 
-    public void SpawnWalls(UnityEngine.GameObject pref, UnityEngine.Vector2 originPos)
+    public void SpawnWalls(UnityEngine.GameObject pref, UnityEngine.Vector2 originPos, UnityEngine.Transform parentTr)
     {
 
         _wallSize = pref.transform.localScale.y;
@@ -70,11 +70,16 @@ public class Cell
         _bottomPos = new UnityEngine.Vector2(posX, -_wallSize * 0.5f + posY);
         _leftPos = new UnityEngine.Vector2(-_wallSize * 0.5f + posX, posY);
 
-        _top = UnityEngine.GameObject.Instantiate(pref, _topPos + originPos, UnityEngine.Quaternion.Euler(0.0f, 0.0f, 90.0f));
-        _right = UnityEngine.GameObject.Instantiate(pref, _rightPos + originPos, UnityEngine.Quaternion.identity);
+        _top = UnityEngine.GameObject.Instantiate(pref, _topPos + originPos , UnityEngine.Quaternion.Euler(0.0f, 0.0f, 90.0f));
+        _right = UnityEngine.GameObject.Instantiate(pref, _rightPos + originPos , UnityEngine.Quaternion.identity);
         _bottom = UnityEngine.GameObject.Instantiate(pref, _bottomPos + originPos, UnityEngine.Quaternion.Euler(0.0f, 0.0f, 90.0f));
         _left = UnityEngine.GameObject.Instantiate(pref, _leftPos + originPos, UnityEngine.Quaternion.identity);
 
+        _top.transform.parent = parentTr;
+        _right.transform.parent = parentTr;
+        _bottom.transform.parent = parentTr;
+        _left.transform.parent = parentTr;
+        
         _walls.Add(_top);
         _walls.Add(_right);
         _walls.Add(_bottom);

@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
 {
-    [Header("Maze Walls: ")]
+    [Header("Maze Components: ")]
     [SerializeField] private GameObject _wallPref;
+    [SerializeField] private GameObject _wallParent;
+
+    private const float _MAZE_SCALE = 5.0f;
 
     private Maze _maze;
 
@@ -11,12 +14,15 @@ public class MazeGenerator : MonoBehaviour
     private void Start()
     {
         GenerateMazeBasic();
+        GenerateRandomPaths();
     }
 
     public void GenerateMazeBasic()
     {
         _maze = new Maze();
-        _maze.InitData(_wallPref);
+        _maze.InitData(_wallPref, _wallParent.transform);
+
+        _wallParent.transform.localScale *= _MAZE_SCALE;
     }
 
     public void GenerateRandomPaths()

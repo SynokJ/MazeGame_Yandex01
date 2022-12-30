@@ -3,10 +3,13 @@ using UnityEngine.UI;
 
 public class PlayerInput : MonoBehaviour
 {
+    [Header("Joystick Parameters:")]
     [SerializeField] private Image _innerCircleImg;
     [SerializeField] private Image _outerCircleImg;
-
     [SerializeField] private GameObject _joystick;
+
+    [Header("Movement Parameters:")]
+    [SerializeField] private PlayerMove _move;
 
     private Touch _firstTouch;
 
@@ -18,6 +21,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.touchCount > 0)
         {
             _firstTouch = Input.GetTouch(0);
@@ -28,10 +32,11 @@ public class PlayerInput : MonoBehaviour
                     Joystick.OnActivate(_firstTouch.position);
                     break;
                 case TouchPhase.Moved:
-                    Joystick.GetVector(_firstTouch.position);
+                    _move.MovePlayerByDirection(Joystick.GetVector(_firstTouch));
                     break;
                 case TouchPhase.Ended:
                     Joystick.OnDeacitivate();
+                    _move.StopToMove();
                     break;
             }
         }

@@ -2,6 +2,8 @@ public class Maze
 {
 
     private const int _MAZE_SIZE = 11;
+    private const int _MAZE_SCALE = 10;
+
     private Cell[,] _data = new Cell[_MAZE_SIZE, _MAZE_SIZE];
 
     public readonly int size = _MAZE_SIZE;
@@ -16,14 +18,14 @@ public class Maze
     }
 
 
-    public void InitData(UnityEngine.GameObject wallPref)
+    public void InitData(UnityEngine.GameObject wallPref, UnityEngine.Transform parent)
     {
         for (int y = 0; y < _MAZE_SIZE; ++y)
             for (int x = 0; x < _MAZE_SIZE; ++x)
             {
                 _data[y, x] = new Cell(x, y);
                 _data[y, x].SetType(Cell.CellType.Free);
-                _data[y, x].SpawnWalls(wallPref, UnityEngine.Vector2.zero - UnityEngine.Vector2.one * size * 0.5f);
+                _data[y, x].SpawnWalls(wallPref, UnityEngine.Vector2.zero - UnityEngine.Vector2.one * size * 0.5f, parent);
             }
 
         for (int y = 0; y < _MAZE_SIZE; ++y)
