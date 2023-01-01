@@ -58,6 +58,11 @@ public class Maze
             }
     }
 
+    public void GenerateCoins()
+    {
+
+    }
+
     public void SetRandomPath()
     {
         int centerPoint = (int)(_MAZE_SIZE * 0.5f);
