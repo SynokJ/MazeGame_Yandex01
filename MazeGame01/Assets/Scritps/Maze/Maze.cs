@@ -83,6 +83,9 @@ public class Maze
 
     public void ClearMaze()
     {
+        if (_data == null)
+            return;
+
         for (int r = 0; r < _MAZE_SIZE; ++r)
             for (int c = 0; c < _MAZE_SIZE; ++c)
                 _data[r, c].DestroyWalls();

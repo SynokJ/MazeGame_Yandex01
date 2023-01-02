@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class MazeGenerator : MonoBehaviour
+public class MazeGenerator : MonoBehaviour, IStateListener
 {
     [Header("Maze Components: ")]
     [SerializeField] private GameObject _wallHorizontal;
@@ -18,24 +18,29 @@ public class MazeGenerator : MonoBehaviour
 
     private void OnEnable()
     {
-        if(_wallParent.GetComponent<CompositeShadowCaster2D>() == null)
-            _wallParent.AddComponent<CompositeShadowCaster2D>();
+        GameStateListener.Listen(this);
     }
 
     private void OnDisable()
     {
-        if (_wallParent.GetComponent<CompositeShadowCaster2D>() != null)
-            Destroy(_wallParent.GetComponent<CompositeShadowCaster2D>());
+        GameStateListener.CloseListener(this);
     }
 
-    private void Start()
+    public void CreateMaze()
     {
         GenerateMazeBasic();
         GenerateRandomPaths();
+
+        if (_wallParent.GetComponent<CompositeShadowCaster2D>() == null)
+            _wallParent.AddComponent<CompositeShadowCaster2D>();
+
+        AstarPath.active.Scan();
     }
 
     public void GenerateMazeBasic()
     {
+        DestroyMaze();
+
         _maze = new Maze();
 
         if (_isBetaVersion)
@@ -53,6 +58,23 @@ public class MazeGenerator : MonoBehaviour
 
     public void DestroyMaze()
     {
+        if (_maze == null)
+            return;
+
         _maze.ClearMaze();
+    }
+
+    public void OnGameStarted()
+    {
+        CreateMaze();
+    }
+
+    public void OnGameFinished()
+    {
+        if (_wallParent == null)
+            return;
+
+        if (_wallParent.GetComponent<CompositeShadowCaster2D>() != null)
+            Destroy(_wallParent.GetComponent<CompositeShadowCaster2D>());
     }
 }
