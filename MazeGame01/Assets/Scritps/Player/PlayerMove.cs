@@ -25,4 +25,5 @@ public class PlayerMove : MonoBehaviour
     }
 
     public void ResetSpeedValue(float speed) => _moveSpeed = speed;
+    public float GetSpeedValue() => _moveSpeed;
 }

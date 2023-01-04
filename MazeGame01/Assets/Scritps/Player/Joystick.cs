@@ -11,6 +11,7 @@ public static class Joystick
     private static UnityEngine.GameObject _joystick;
 
     private static float _joystickRadius;
+    private static bool _isInverted = false;
 
     public static void OnInit(UnityEngine.UI.Image inner, UnityEngine.UI.Image outer, UnityEngine.GameObject joystick)
     {
@@ -41,7 +42,7 @@ public static class Joystick
 
     public static UnityEngine.Vector2 GetVector(UnityEngine.Touch touchPos)
     {
-        ;
+
         UnityEngine.Vector2 dragPos = touchPos.position;
         _vec = (dragPos - (UnityEngine.Vector2)_outerCircel.transform.position).normalized;
 
@@ -52,6 +53,9 @@ public static class Joystick
         else
             _innerCircel.transform.position = (UnityEngine.Vector2)_outerCircel.transform.position + _vec * _joystickRadius;
 
-        return _vec;
+        return _isInverted ? -_vec : _vec;
     }
+
+    public static void InvertVec() => _isInverted = true;
+    public static void ResetVec() => _isInverted = false;
 }
