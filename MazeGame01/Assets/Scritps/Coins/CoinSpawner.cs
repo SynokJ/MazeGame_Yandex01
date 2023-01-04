@@ -8,6 +8,7 @@ public class CoinSpawner : MonoBehaviour, IStateListener
     [SerializeField] private GameObject _coinPref;
 
     private Queue<GameObject> _coins = new Queue<GameObject>();
+    private Queue<Vector3> _busyPosition = new Queue<Vector3>();
 
     private void OnEnable()
     {
@@ -29,6 +30,22 @@ public class CoinSpawner : MonoBehaviour, IStateListener
             coin.OnSpawned(_spawnPoints[Random.Range(0, _spawnPoints.Count)].position);
 
             _coins.Enqueue(currentCoin);
+        }
+    }
+
+    public void ShuffleCoins()
+    {
+        _busyPosition.Clear();
+
+        foreach (var coin in _coins)
+        {
+            int posId = Random.Range(0, _spawnPoints.Count);
+
+            while (_busyPosition.Contains(_spawnPoints[posId].position))
+                posId = Random.Range(0, _spawnPoints.Count);
+
+            coin.transform.position = _spawnPoints[posId].position;
+            _busyPosition.Enqueue(coin.transform.position);
         }
     }
 
