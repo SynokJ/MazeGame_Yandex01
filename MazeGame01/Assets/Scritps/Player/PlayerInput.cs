@@ -10,8 +10,11 @@ public class PlayerInput : MonoBehaviour
 
     [Header("Movement Parameters:")]
     [SerializeField] private PlayerMove _move;
+    [SerializeField] private PlayerAnimation _anim;
 
     private Touch _firstTouch;
+    private Vector2 _originPos = default;
+    private bool _isMoving = false;
 
     private void Start()
     {
@@ -26,9 +29,12 @@ public class PlayerInput : MonoBehaviour
         {
             _firstTouch = Input.GetTouch(0);
 
+
             switch (_firstTouch.phase)
             {
                 case TouchPhase.Began:
+                    _originPos = _firstTouch.position;
+                    _isMoving = true;
                     Joystick.OnActivate(_firstTouch.position);
                     break;
                 case TouchPhase.Moved:
@@ -37,8 +43,15 @@ public class PlayerInput : MonoBehaviour
                 case TouchPhase.Ended:
                     Joystick.OnDeacitivate();
                     _move.StopToMove();
+
+                    _isMoving = false;
                     break;
             }
+
+            if (_isMoving)
+                _anim.PlayAnimByDir((_firstTouch.position - _originPos).normalized);
+            else
+                _anim.PlayAnimByDir(Vector2.zero);
         }
     }
 }

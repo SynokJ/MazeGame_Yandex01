@@ -3,7 +3,7 @@ using UnityEngine;
 public class CoinSwapper : BuffersWithTimer, IMapBuffer
 {
 
-    [SerializeField] private CoinSpawner coinSwapper;
+    [SerializeField] private ItemSpawner coinSwapper;
 
     private void OnEnable()
     {

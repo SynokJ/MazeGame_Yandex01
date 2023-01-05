@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinSpawner : MonoBehaviour, IStateListener
+public class ItemSpawner : MonoBehaviour, IStateListener
 {
     [SerializeField] private List<Transform> _spawnPoints = new List<Transform>();
     [SerializeField] private int _coinNum;
-    [SerializeField] private GameObject _coinPref;
+    [SerializeField] private List<GameObject> _coinPrefs = new List<GameObject>();
 
     private Queue<GameObject> _coins = new Queue<GameObject>();
     private Queue<Vector3> _busyPosition = new Queue<Vector3>();
@@ -24,9 +24,9 @@ public class CoinSpawner : MonoBehaviour, IStateListener
     {
         for (int i = 0; i < _coinNum; ++i)
         {
-            GameObject currentCoin = Instantiate(_coinPref, _spawnPoints[i].position, Quaternion.identity);
+            GameObject currentCoin = Instantiate(_coinPrefs[Random.Range(0, _coinPrefs.Count)], _spawnPoints[i].position, Quaternion.identity);
 
-            Coin coin = currentCoin.GetComponent<Coin>();
+            Items coin = currentCoin.GetComponent<Items>();
             coin.OnSpawned(_spawnPoints[Random.Range(0, _spawnPoints.Count)].position);
 
             _coins.Enqueue(currentCoin);

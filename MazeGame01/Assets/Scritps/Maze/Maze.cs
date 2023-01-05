@@ -58,10 +58,6 @@ public class Maze
             }
     }
 
-    public void GenerateCoins()
-    {
-
-    }
 
     public void SetRandomPath()
     {

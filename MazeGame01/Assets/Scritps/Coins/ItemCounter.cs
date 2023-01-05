@@ -1,4 +1,4 @@
-public static class CoinCounter
+public static class ItemCounter
 {
     private static int _coinNum;
     private static int _coinNumOrigin;

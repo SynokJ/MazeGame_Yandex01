@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Coin : MonoBehaviour
+public class Items : MonoBehaviour
 {
 
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -16,7 +16,7 @@ public class Coin : MonoBehaviour
 
     private void OnTaken()
     {
-        CoinCounter.AddCoin();
+        ItemCounter.AddCoin();
         SetVisibleStatus(false);
     }
 
