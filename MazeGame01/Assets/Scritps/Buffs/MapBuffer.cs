@@ -26,5 +26,9 @@ public static class MapBuffer
         _mapBuffers[_bufferId]?.OnMapBuffed();
     }
 
-    public static void UndoBuff() => _mapBuffers[_bufferId]?.OnMapDebuffed();
+    public static void UndoBuff()
+    {
+        if (_bufferId >= 0 && _bufferId < _mapBuffers.Count)
+            _mapBuffers[_bufferId].OnMapDebuffed();
+    }
 }

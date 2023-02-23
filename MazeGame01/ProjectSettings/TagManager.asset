@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Buffer Panel
+  - Buffer Text
+  - Medkit
+  - Lighting
+  - Bottle
+  - Money
+  - Shoes
   layers:
   - Default
   - TransparentFX

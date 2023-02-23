@@ -31,11 +31,12 @@ public class MazeGenerator : MonoBehaviour, IStateListener
         GenerateMazeBasic();
         GenerateRandomPaths();
 
-        if (_wallParent.GetComponent<CompositeShadowCaster2D>() == null)
-            _wallParent.AddComponent<CompositeShadowCaster2D>();
+        _wallParent.GetComponent<CompositeShadowCaster2D>().enabled = false;
+        _wallParent.GetComponent<CompositeShadowCaster2D>().enabled = true;
 
         AstarPath.active.Scan();
     }
+
 
     public void GenerateMazeBasic()
     {
@@ -74,7 +75,6 @@ public class MazeGenerator : MonoBehaviour, IStateListener
         if (_wallParent == null)
             return;
 
-        if (_wallParent.GetComponent<CompositeShadowCaster2D>() != null)
-            Destroy(_wallParent.GetComponent<CompositeShadowCaster2D>());
+        DestroyMaze();
     }
 }

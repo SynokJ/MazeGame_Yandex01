@@ -10,6 +10,8 @@ public class EnemyAI : MonoBehaviour, IStateListener
 
     [Header("Maze Target Points:")]
     [SerializeField] private List<Transform> _targets;
+    [SerializeField] private Transform _playerTr;
+
     private Transform _target;
     private Vector3 _lastTargetPos;
 
@@ -28,7 +30,6 @@ public class EnemyAI : MonoBehaviour, IStateListener
 
     private const float _DISTANCE_TO_ROTATE = 0.01f;
 
-    private bool _canMove = false;
 
     private void OnEnable()
     {
@@ -42,9 +43,6 @@ public class EnemyAI : MonoBehaviour, IStateListener
 
     void FixedUpdate()
     {
-        if (!_canMove)
-            return;
-
         if (_path == null)
             return;
 
@@ -52,8 +50,7 @@ public class EnemyAI : MonoBehaviour, IStateListener
         {
             while (_target.position == _lastTargetPos)
                 _target = _targets[Random.Range(0, _targets.Count)];
-            _lastTargetPos = _target.position
-                ;
+            _lastTargetPos = _target.position;
             _currentWayPoint = 0;
         }
 
@@ -66,8 +63,6 @@ public class EnemyAI : MonoBehaviour, IStateListener
 
         if (_distance < _nextWayPointDistance)
             _currentWayPoint++;
-
-
     }
 
     private void StartMovement()
@@ -77,9 +72,6 @@ public class EnemyAI : MonoBehaviour, IStateListener
 
         _target = _targets[Random.Range(0, _targets.Count)];
         _lastTargetPos = _target.position;
-
-        InvokeRepeating("UpdatePath", 0.0f, 1f);
-        InvokeRepeating("UpdateRotation", 0.0f, 1f);
     }
 
     private void UpdatePath()
@@ -105,14 +97,23 @@ public class EnemyAI : MonoBehaviour, IStateListener
         }
     }
 
+    public void OnPlayerDetected(Transform playerTr)
+    {
+        _playerTr = playerTr;
+        _target = playerTr;
+
+        Debug.Log("Player is Detected => " + Time.time);
+    }
     public void OnGameStarted()
     {
         StartMovement();
-        _canMove = true;
+
+        InvokeRepeating("UpdatePath", 0.0f, 1f);
+        InvokeRepeating("UpdateRotation", 0.0f, 1f);
     }
 
     public void OnGameFinished()
     {
-        _canMove = false;
+        // TODO
     }
 }

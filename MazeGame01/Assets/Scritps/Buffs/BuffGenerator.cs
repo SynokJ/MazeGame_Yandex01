@@ -20,6 +20,9 @@ public class BuffGenerator : MonoBehaviour, IStateListener
 
     public void OnGameFinished()
     {
+        MapBuffer.UndoBuff();
+        PlayerBuffer.UndoBuff();
+        EnemiesBuffer.UndoBuff();
     }
 
     private void PickRandomBuffers()

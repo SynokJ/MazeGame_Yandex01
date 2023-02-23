@@ -26,5 +26,9 @@ public static class PlayerBuffer
         _playerBuffers[_bufferId]?.OnPlayerBuffed();
     }
 
-    public static void UndoBuff() => _playerBuffers[_bufferId]?.OnPlayerDebuffed();
+    public static void UndoBuff()
+    {
+        if (_bufferId >= 0 && _bufferId < _playerBuffers.Count)
+            _playerBuffers[_bufferId]?.OnPlayerDebuffed();
+    }
 }

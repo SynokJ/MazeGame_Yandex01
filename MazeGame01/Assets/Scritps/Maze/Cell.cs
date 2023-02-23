@@ -1,3 +1,6 @@
+using UnityEditor;
+using UnityEngine;
+
 public class Cell
 {
 
@@ -72,8 +75,8 @@ public class Cell
         _bottomPos = new UnityEngine.Vector2(posX, -_wallSize * 0.5f + posY);
         _leftPos = new UnityEngine.Vector2(-_wallSize * 0.5f + posX, posY);
 
-        _top = UnityEngine.GameObject.Instantiate(pref, _topPos + originPos , UnityEngine.Quaternion.Euler(0.0f, 0.0f, 90.0f));
-        _right = UnityEngine.GameObject.Instantiate(pref, _rightPos + originPos , UnityEngine.Quaternion.identity);
+        _top = UnityEngine.GameObject.Instantiate(pref, _topPos + originPos, UnityEngine.Quaternion.Euler(0.0f, 0.0f, 90.0f));
+        _right = UnityEngine.GameObject.Instantiate(pref, _rightPos + originPos, UnityEngine.Quaternion.identity);
         _bottom = UnityEngine.GameObject.Instantiate(pref, _bottomPos + originPos, UnityEngine.Quaternion.Euler(0.0f, 0.0f, 90.0f));
         _left = UnityEngine.GameObject.Instantiate(pref, _leftPos + originPos, UnityEngine.Quaternion.identity);
 
@@ -81,7 +84,7 @@ public class Cell
         _right.transform.parent = parentTr;
         _bottom.transform.parent = parentTr;
         _left.transform.parent = parentTr;
-        
+
         _walls.Add(_top);
         _walls.Add(_right);
         _walls.Add(_bottom);
@@ -119,7 +122,10 @@ public class Cell
     public void DestroyWalls()
     {
         foreach (var wall in _walls)
-            UnityEngine.GameObject.DestroyImmediate(wall);
+            if (!Application.isPlaying)
+                UnityEngine.GameObject.DestroyImmediate(wall);
+            else if (Application.isPlaying)
+                UnityEngine.GameObject.Destroy(wall);
     }
 
     public void DestroyCertainWallByType(WallType type)

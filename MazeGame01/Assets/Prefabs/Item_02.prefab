@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1580479625344470512}
   - component: {fileID: 6040862332949500347}
-  - component: {fileID: 2472173621262579194}
+  - component: {fileID: 3196580029013151257}
   m_Layer: 0
   m_Name: Item_02
-  m_TagString: Untagged
+  m_TagString: Lighting
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -51,7 +51,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &2472173621262579194
+--- !u!114 &3196580029013151257
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 393129220321176507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b4b161253aa0274da6c0e1b3e0568c2, type: 3}
+  m_Script: {fileID: 11500000, guid: e4c1ab3ef810e7b44a0a2359567756c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 2220278538960043824}

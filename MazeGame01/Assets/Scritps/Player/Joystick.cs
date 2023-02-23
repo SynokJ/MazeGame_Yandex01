@@ -56,6 +56,22 @@ public static class Joystick
         return _isInverted ? -_vec : _vec;
     }
 
+    public static UnityEngine.Vector2 GetVectorByPosition(Vector2 touchPos)
+    {
+
+        UnityEngine.Vector2 dragPos = touchPos;
+        _vec = (dragPos - (UnityEngine.Vector2)_outerCircel.transform.position).normalized;
+
+        float joystickDist = UnityEngine.Vector2.Distance(dragPos, (UnityEngine.Vector2)_outerCircel.transform.position);
+
+        if (joystickDist < _joystickRadius)
+            _innerCircel.transform.position = (UnityEngine.Vector2)_outerCircel.transform.position + _vec * joystickDist;
+        else
+            _innerCircel.transform.position = (UnityEngine.Vector2)_outerCircel.transform.position + _vec * _joystickRadius;
+
+        return _isInverted ? -_vec : _vec;
+    }
+
     public static void InvertVec() => _isInverted = true;
     public static void ResetVec() => _isInverted = false;
 }

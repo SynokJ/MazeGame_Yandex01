@@ -3,7 +3,7 @@ public static class EnemiesBuffer
 
     private static System.Collections.Generic.List<IEnemyBuffer> _enemiesBuffers = new System.Collections.Generic.List<IEnemyBuffer>();
     private static System.Random rnd = new System.Random();
-    private static int _bufferId;
+    private static int _bufferId = 0;
 
     public static void Listen(IEnemyBuffer buffer)
     {
@@ -26,5 +26,12 @@ public static class EnemiesBuffer
         _enemiesBuffers[_bufferId]?.OnEnemyBuffed();
     }
 
-    public static void UndoBuff() => _enemiesBuffers[_bufferId]?.OnEnemyDebuffed();
+    public static void UndoBuff()
+    {
+        if (_enemiesBuffers == null || _enemiesBuffers.Count == 0)
+            return;
+
+        if (_bufferId >= 0 && _enemiesBuffers[_bufferId] != null)
+            _enemiesBuffers[_bufferId].OnEnemyDebuffed();
+    }
 }
