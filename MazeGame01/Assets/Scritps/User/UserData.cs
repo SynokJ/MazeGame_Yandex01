@@ -19,15 +19,13 @@ public class UserData : MonoBehaviour
     #endregion
 
     private static int _coinAmount = 2000;
-    private PurchaseDatalist<PurchaseData> _purchases = new PurchaseDatalist<PurchaseData>();
+    private PurchaseDatalist<PurchaseItem> _purchases = new PurchaseDatalist<PurchaseItem>();
 
     public int CoinAmount { get => _coinAmount; private set { } }
-    private string jsonRes;
+    private static string jsonRes = default;
 
     public void DecreaseCoins(int num)
     {
-        Debug.Log($"Before: {_coinAmount}, After: {_coinAmount - num}, Time: {Time.time}");
-
         _coinAmount -= num;
 
         if (_coinAmount < 0)
@@ -35,20 +33,20 @@ public class UserData : MonoBehaviour
     }
 
     public void IncreaseCoins(int num) => _coinAmount += num;
-
-    public void AddPurchase(PurchaseData data)
-    {
-        if (!_purchases.Contains(data))
-            _purchases.Add(data);
-    }
+    public void AddPurchase(PurchaseItem data) => _purchases.AddItem(data);
 
     public void SavePurchases()
     {
         jsonRes = JsonUtility.ToJson(_purchases);
-        Debug.Log(jsonRes);
     }
 
     public string GetBoughtList() => jsonRes;
+}
+
+[System.Serializable]
+public class PurchaseItem
+{
+    public string dataName;
 }
 
 [System.Serializable]
@@ -56,19 +54,9 @@ public class PurchaseDatalist<T>
 {
     public List<T> list = new List<T>();
 
-    public bool Contains(T t) => list.Contains(t);
-    public void Add(T t) => list.Add(t);
-    public int GetLen() => list.Count;
-    public T GetValue(int index) => list[index];
-}
-
-[System.Serializable]
-public class PurchaseData
-{
-    public string name;
-
-    public PurchaseData(ShopItemSO item)
+    public void AddItem(T item)
     {
-        name = item.itemName;
+        if (!list.Contains(item))
+            list.Add(item);
     }
 }

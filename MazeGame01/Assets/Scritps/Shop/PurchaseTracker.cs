@@ -19,12 +19,7 @@ public class PurchaseTracker : MonoBehaviour
         var currentItem = _viewer.GetCurrentShopItem();
 
         if (UserData.instance.CoinAmount >= currentItem.itemCost)
-        {
             OnBuyItem(currentItem);
-            SavePurchaseData();
-        }
-        else
-            Debug.Log("Purchase is failed!");
 
         UpdateMoneyText();
         _viewer.OnPurshaseUpdate();
@@ -35,12 +30,10 @@ public class PurchaseTracker : MonoBehaviour
         UserData.instance.DecreaseCoins(currentItem.itemCost);
         currentItem.isBought = true;
 
-        UserData.instance.AddPurchase(new PurchaseData(currentItem));
-        Debug.Log("Purchase is succeded!");
-    }
+        PurchaseItem data = new PurchaseItem();
+        data.dataName = currentItem.itemName;
 
-    private void SavePurchaseData()
-    {
+        UserData.instance.AddPurchase(data);
         UserData.instance.SavePurchases();
     }
 

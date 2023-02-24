@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,19 +20,26 @@ public class ShopViewer : MonoBehaviour
 
     private void Start()
     {
-        ResetPurchases();
-
-        var res = JsonUtility.FromJson<PurchaseDatalist<PurchaseData>>(UserData.instance.GetBoughtList());
-
-        if (res != null)
-            for (int i = 0; i < res.GetLen(); ++i)
-                if (res.GetValue(i).name == _shopItems[i].itemName)
-                    _shopItems[i].isBought = true;
-
+        ResetPourchases();
+        InitPurchases();
         OnPurshaseUpdate();
     }
 
-    private void ResetPurchases()
+    private void InitPurchases()
+    {
+        var res = JsonUtility.FromJson<PurchaseDatalist<PurchaseItem>>(UserData.instance.GetBoughtList());
+
+        if (!res.IsUnityNull())
+            for (int i = 0; i < res.list.Count; ++i)
+                for (int r = 0; r < _shopItems.Count; ++r)
+                    if (_shopItems[r].itemName.Equals(res.list[i].dataName))
+                    {
+                        _shopItems[r].isBought = true;
+                        break;
+                    }
+    }
+
+    private void ResetPourchases()
     {
         for (int i = 0; i < _shopItems.Count; ++i)
             _shopItems[i].isBought = false;
