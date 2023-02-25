@@ -12,11 +12,15 @@ public class ShopViewer : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _purchaseCost;
 
     [SerializeField] private GameObject _buyButton;
-    [SerializeField] private GameObject _selectButton;
+    [SerializeField] private GameObject _activateButton;
+    [SerializeField] private GameObject _deactivateButton;
 
     [Header("Shop Items:")]
     [SerializeField] private List<ShopItemSO> _shopItems = new List<ShopItemSO>();
     private int _currentPurshaceId = 0;
+
+    private readonly Color _DEFAULT_SELECTION_COLOR = Color.green;
+    private readonly Color _DEFAULT_COLOR = Color.white;
 
     private void Start()
     {
@@ -54,7 +58,10 @@ public class ShopViewer : MonoBehaviour
         _purchaseCost.text = currentItem.itemCost.ToString();
 
         _buyButton.SetActive(!currentItem.isBought);
-        _selectButton.SetActive(currentItem.isBought);
+        _activateButton.SetActive(currentItem.isBought);
+        _deactivateButton.SetActive(currentItem.isBought);
+
+        SetActivateColorStatus();
     }
 
     public void SwitchToNext()
@@ -78,4 +85,30 @@ public class ShopViewer : MonoBehaviour
     }
 
     public ShopItemSO GetCurrentShopItem() => _shopItems[_currentPurshaceId];
+
+    public void OnActivateButtonClicked()
+    {
+        _shopItems[_currentPurshaceId].isActivate = true;
+        SetActivateColorStatus();
+    }
+
+    public void OnDeactivateButtonClicked()
+    {
+        _shopItems[_currentPurshaceId].isActivate = false;
+        SetActivateColorStatus();
+    }
+
+    private void SetActivateColorStatus()
+    {
+        if (_shopItems[_currentPurshaceId].isActivate)
+        {
+            _activateButton.GetComponent<Image>().color = _DEFAULT_SELECTION_COLOR;
+            _deactivateButton.GetComponent<Image>().color = _DEFAULT_COLOR;
+        }
+        else
+        {
+            _activateButton.GetComponent<Image>().color = _DEFAULT_COLOR;
+            _deactivateButton.GetComponent<Image>().color = _DEFAULT_SELECTION_COLOR;
+        }
+    }
 }

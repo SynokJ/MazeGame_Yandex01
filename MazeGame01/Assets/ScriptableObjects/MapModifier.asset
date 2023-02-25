@@ -16,4 +16,4 @@ MonoBehaviour:
   itemSprite: {fileID: -1299700068, guid: af4c91dc132c8164686531b26c33e397, type: 3}
   itemCost: 0
   isBought: 0
-  purchaseItem: {fileID: 0}
+  isActivate: 0

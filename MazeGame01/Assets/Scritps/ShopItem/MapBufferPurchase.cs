@@ -8,11 +8,14 @@ public class MapBufferPurchase : PurchaseItemActivator
     [SerializeField] private MapLightDown _mapLightDown;
     [SerializeField] private CoinSwapper _coinSwapper;
 
+
     protected override void OnActivate()
     {
         _mapLightUp.enabled = true;
         _mapLightDown.enabled = true;
         _coinSwapper.enabled = true;
+
+        Debug.Log("Map Buffer is Activated!");
     }
 
     protected override void OnDeactivate()
@@ -20,5 +23,7 @@ public class MapBufferPurchase : PurchaseItemActivator
         _mapLightUp.enabled = false;
         _mapLightDown.enabled = false;
         _coinSwapper.enabled = false;
+
+        Debug.Log("Map Buffer is Deactivated!");
     }
 }

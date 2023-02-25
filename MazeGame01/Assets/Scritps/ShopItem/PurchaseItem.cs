@@ -3,9 +3,11 @@ using UnityEngine;
 public abstract class PurchaseItemActivator : MonoBehaviour
 {
 
+    [Header("Purcahse Components:")]
+    [SerializeField] public ShopItemSO _identificator;
+
     protected abstract void OnActivate();
     protected abstract void OnDeactivate();
-
 
     public void OnActiveStatusController(bool stat)
     {
@@ -13,5 +15,16 @@ public abstract class PurchaseItemActivator : MonoBehaviour
             OnActivate();
         else
             OnDeactivate();
+    }
+
+    public ShopItemSO GetItemId()
+    {
+        if(_identificator == null)
+        {
+            Debug.Log("WTF");
+            return default;
+        }
+
+        return _identificator;
     }
 }

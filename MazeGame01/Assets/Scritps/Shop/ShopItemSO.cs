@@ -10,6 +10,5 @@ public class ShopItemSO : ScriptableObject
     public Sprite itemSprite;
     public int itemCost;
     public bool isBought;
-
-    public PurchaseItemActivator purchaseItem;
+    public bool isActivate;
 }

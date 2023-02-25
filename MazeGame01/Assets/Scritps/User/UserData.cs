@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UserData : MonoBehaviour
@@ -41,6 +42,27 @@ public class UserData : MonoBehaviour
     }
 
     public string GetBoughtList() => jsonRes;
+    public bool TryGetPurchase(ShopItemSO item)
+    {
+        if (_purchases.list == null || _purchases.list.Count == 0)
+        {
+            Debug.Log("No Purchases.");
+            return false;
+        }
+
+        if (item == null)
+        {
+            Debug.Log("Item is GG");
+            return false;
+        }
+
+        for (int i = 0; i < _purchases.list.Count; ++i)
+            if (item.itemName.Equals(_purchases.list[i].dataName))
+                return true;
+
+        return false;
+    }
+
 }
 
 [System.Serializable]
