@@ -66,6 +66,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 2220278538960043824}
   _collider: {fileID: 6040862332949500347}
   _light: {fileID: 6839461174329237037}
+  itemPoints: 50
 --- !u!1 &6311920209136095769
 GameObject:
   m_ObjectHideFlags: 0

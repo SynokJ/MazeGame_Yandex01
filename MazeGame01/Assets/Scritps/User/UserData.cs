@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Runtime.InteropServices;
 using UnityEngine;
+
+
 
 public class UserData : MonoBehaviour
 {
@@ -19,11 +21,22 @@ public class UserData : MonoBehaviour
     }
     #endregion
 
-    private static int _coinAmount = 2000;
+    private static int _coinAmount = 0;
     private PurchaseDatalist<PurchaseItem> _purchases = new PurchaseDatalist<PurchaseItem>();
 
     public int CoinAmount { get => _coinAmount; private set { } }
     private static string jsonRes = default;
+
+    [DllImport("__Internal")]
+    private static extern void LoadExtern();
+
+    [DllImport("__Internal")]
+    private static extern void SaveExtern(string date);
+
+    private void Start()
+    {
+        // load data
+    }
 
     public void DecreaseCoins(int num)
     {
@@ -33,12 +46,18 @@ public class UserData : MonoBehaviour
             _coinAmount = 0;
     }
 
-    public void IncreaseCoins(int num) => _coinAmount += num;
+    public void IncreaseCoins(int num)
+    {
+        _coinAmount += num;
+        Debug.Log($"Coin Num Increased: {_coinAmount}");
+    }
+
     public void AddPurchase(PurchaseItem data) => _purchases.AddItem(data);
 
     public void SavePurchases()
     {
         jsonRes = JsonUtility.ToJson(_purchases);
+        //SaveExtern(jsonRes);
     }
 
     public string GetBoughtList() => jsonRes;
@@ -81,4 +100,14 @@ public class PurchaseDatalist<T>
         if (!list.Contains(item))
             list.Add(item);
     }
+}
+
+/// <summary>
+/// Player Stats
+/// </summary>
+
+[System.Serializable]
+public class PlayerInfo
+{
+    public int coinAmount;
 }

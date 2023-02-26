@@ -22,22 +22,23 @@ public abstract class Item : MonoBehaviour
     private const string _BUFFER_MONEY_TAG_NAME = "Money";
     private const string _BUFFER_SHOES_TAG_NAME = "Shoes";
 
-    private const string _BUFFER_MEDICIN_QUTE_EN = "Health Is Recieved";
+    private const string _BUFFER_MEDICIN_QUTE_EN = "Health Recieved";
     private const string _BUFFER_MEDICIN_QUTE_RU = "Здоровье Получено";
 
-    private const string _BUFFER_LIGHTNING_QUTE_EN = "Lighting Is Improved";
+    private const string _BUFFER_LIGHTNING_QUTE_EN = "Lighting Improved";
     private const string _BUFFER_LIGHTNING_QUTE_RU = "Свет Улучшен";
 
-    private const string _BUFFER_BOTTLE_QUTE_EN = "Water Is Drunk";
+    private const string _BUFFER_BOTTLE_QUTE_EN = "Water Drunk";
     private const string _BUFFER_BOTTLE_QUTE_RU = "Воды Выпита";
 
-    private const string _BUFFER_MONEY_QUTE_EN = "Money Is Recieved";
+    private const string _BUFFER_MONEY_QUTE_EN = "Money Recieved";
     private const string _BUFFER_MONEY_QUTE_RU = "Деньги Приняты";
 
-    private const string _BUFFER_SHOES_QUTE_EN = "Speed Is Up";
+    private const string _BUFFER_SHOES_QUTE_EN = "Speed Up";
     private const string _BUFFER_SHOES_QUTE_RU = "Скорость Увеличена";
 
-    protected int itemPoints = 0;
+    [Header("Item Coin Weight:")]
+    [SerializeField] protected int itemPoints = 0;
 
     protected abstract void OnBuffed();
 
@@ -66,7 +67,9 @@ public abstract class Item : MonoBehaviour
         _anim.SetTrigger(_ANIMATION_POPUP_NAME);
 
         OnBufferTextShown();
-        ItemCounter.AddCoin();
+
+        UserData.instance.IncreaseCoins(itemPoints);
+        ItemCounter.CollectCoinItem();
     }
 
     public void OnSpawned(Vector3 pos)

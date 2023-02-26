@@ -36,7 +36,7 @@ public class WinGameController : MonoBehaviour, IStateListener
         }
     }
 
-    public void OnRestartButtonClicked()
+    public void OnMenuButtonClicked()
     {
         _winPanel.SetActive(false);
         _mainMenuPanel.SetActive(true);

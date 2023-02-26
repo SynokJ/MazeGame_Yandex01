@@ -29,7 +29,7 @@ public class LoseGameController : MonoBehaviour, IStateListener
             _losePanel.SetActive(true);
     }
 
-    public void OnRestartButtonClicked()
+    public void OnMenuButtonClicked()
     {
         _losePanel.SetActive(false);
         _mainMenuPanel.SetActive(true);

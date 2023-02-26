@@ -261,3 +261,4 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 16789429967359534}
   _collider: {fileID: 16789430446754814}
   _light: {fileID: 16789430073065643}
+  itemPoints: 10

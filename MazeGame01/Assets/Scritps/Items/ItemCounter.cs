@@ -8,7 +8,7 @@ public static class ItemCounter
     public delegate void OnDrawItems();
     private static OnDrawItems drawItems = default;
 
-    public static void AddCoin()
+    public static void CollectCoinItem()
     {
         _currentItemNum++;
         _areItemsCollected = _currentItemNum >= _originItemNum;
