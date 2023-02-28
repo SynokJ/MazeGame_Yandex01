@@ -21,22 +21,15 @@ public class UserData : MonoBehaviour
     }
     #endregion
 
+    private const string _FIRST_ITEM_NAME = "Map Modifier";
+    private const string _SECOND_ITEM_NAME = "Player Modifier";
+    private const string _THIRD_ITEM_NAME = "The One Of Us";
+
     private static int _coinAmount = 0;
     private PurchaseDatalist<PurchaseItem> _purchases = new PurchaseDatalist<PurchaseItem>();
 
     public int CoinAmount { get => _coinAmount; private set { } }
     private static string jsonRes = default;
-
-    [DllImport("__Internal")]
-    private static extern void LoadExtern();
-
-    [DllImport("__Internal")]
-    private static extern void SaveExtern(string date);
-
-    private void Start()
-    {
-        // load data
-    }
 
     public void DecreaseCoins(int num)
     {
@@ -57,23 +50,31 @@ public class UserData : MonoBehaviour
     public void SavePurchases()
     {
         jsonRes = JsonUtility.ToJson(_purchases);
-        //SaveExtern(jsonRes);
+
+        PlayerInfo playerInfo = new PlayerInfo();
+
+        playerInfo.coinAmount = _coinAmount;
+        playerInfo.firstItem = _purchases.list[0].dataName.Equals(_FIRST_ITEM_NAME);
+
+        if (_purchases.list.Count == 2)
+            playerInfo.secondItem = _purchases.list[1].dataName.Equals(_SECOND_ITEM_NAME);
+
+        if (_purchases.list.Count == 3)
+            playerInfo.thirdItem = _purchases.list[2].dataName.Equals(_THIRD_ITEM_NAME);
+
+        UserProgressManager.Instance.SetPlayerData(playerInfo);
     }
+
+    public void SetCoinAmount(int coins) => _coinAmount = coins;
 
     public string GetBoughtList() => jsonRes;
     public bool TryGetPurchase(ShopItemSO item)
     {
         if (_purchases.list == null || _purchases.list.Count == 0)
-        {
-            Debug.Log("No Purchases.");
             return false;
-        }
 
         if (item == null)
-        {
-            Debug.Log("Item is GG");
             return false;
-        }
 
         for (int i = 0; i < _purchases.list.Count; ++i)
             if (item.itemName.Equals(_purchases.list[i].dataName))
@@ -100,14 +101,4 @@ public class PurchaseDatalist<T>
         if (!list.Contains(item))
             list.Add(item);
     }
-}
-
-/// <summary>
-/// Player Stats
-/// </summary>
-
-[System.Serializable]
-public class PlayerInfo
-{
-    public int coinAmount;
 }

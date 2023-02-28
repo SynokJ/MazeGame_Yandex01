@@ -25,12 +25,23 @@ mergeInto(LibraryManager.library, {
     })
   },
 
-  LoadExtern: function () {
-    // todo
+  SaveExtern: function (date) {
+    var dateString = UTF8ToString(date);
+    var myobj = JSON.parse(dateString);
+    player.setData(myobj);
   },
 
-  SaveExtern: function (string date) {
-    // todo
+  LoadExtern: function () {
+    if(player == null){
+      console.log('player is not inited!');
+      return;
+    }
+
+    player.getData().then(_date => {
+      const myJson = JSON.stringify(_date);
+      myGameInstance.SendMessage('User Manager', 'SetPlayerInfo', myJson);
+      console.log('player info is inited');
+    });
   },
 
 });
