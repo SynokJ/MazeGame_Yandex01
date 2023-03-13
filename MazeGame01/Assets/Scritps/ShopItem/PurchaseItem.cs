@@ -20,10 +20,7 @@ public abstract class PurchaseItemActivator : MonoBehaviour
     public ShopItemSO GetItemId()
     {
         if(_identificator == null)
-        {
-            Debug.Log("WTF");
             return default;
-        }
 
         return _identificator;
     }

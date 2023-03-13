@@ -22,7 +22,6 @@ public class Yandex : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void OnAuth();
 
-
     public void OnAuthButtonClicked()
     {
         OnAuth();

@@ -2,25 +2,8 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 
-[System.Serializable]
-public class PlayerInfo
-{
-    public int coinAmount;
-    public bool firstItem;
-    public bool secondItem;
-    public bool thirdItem;
-
-    public override string ToString()
-    {
-        return $"coins: {coinAmount}, first: {firstItem}, second: {secondItem}, third: {thirdItem}";
-    }
-}
-
 public class UserProgressManager : MonoBehaviour
 {
-
-    [DllImport("__Internal")]
-    private static extern void LoadExtern();
 
     [DllImport("__Internal")]
     private static extern void SaveExtern(string date);
@@ -40,9 +23,6 @@ public class UserProgressManager : MonoBehaviour
     }
     #endregion
 
-    [Header("DEBUG TEXT:")]
-    [SerializeField] private TMPro.TextMeshProUGUI _debugText;
-
     private PlayerInfo playerInfo;
 
     public void Save()
@@ -54,10 +34,18 @@ public class UserProgressManager : MonoBehaviour
     public void SetPlayerInfo(string value)
     {
         playerInfo = JsonUtility.FromJson<PlayerInfo>(value);
-        _debugText.text = playerInfo.ToString();
-
-        //UserData.instance.SetCoinAmount(playerInfo.coinAmount);
+        UserData.instance.InitSavedPurchases(playerInfo);
     }
 
-    public void SetPlayerData(PlayerInfo info) => playerInfo = info;
+    public void ResetPlayerInfo()
+    {
+        playerInfo = new PlayerInfo();
+        UserData.instance.InitSavedPurchases(playerInfo);
+        Save();
+    }
+
+    public void SetPlayerData(PlayerInfo info)
+    {
+        playerInfo = info;
+    }
 }

@@ -15,8 +15,7 @@ public class ShopViewer : MonoBehaviour
     [SerializeField] private GameObject _activateButton;
     [SerializeField] private GameObject _deactivateButton;
 
-    [Header("Shop Items:")]
-    [SerializeField] private List<ShopItemSO> _shopItems = new List<ShopItemSO>();
+    private List<ShopItemSO> items = new List<ShopItemSO>();
     private int _currentPurshaceId = 0;
 
     private readonly Color _DEFAULT_SELECTION_COLOR = Color.green;
@@ -29,29 +28,28 @@ public class ShopViewer : MonoBehaviour
         OnPurshaseUpdate();
     }
 
-    private void InitPurchases()
-    {
-        var res = JsonUtility.FromJson<PurchaseDatalist<PurchaseItem>>(UserData.instance.GetBoughtList());
-
-        if (!res.IsUnityNull())
-            for (int i = 0; i < res.list.Count; ++i)
-                for (int r = 0; r < _shopItems.Count; ++r)
-                    if (_shopItems[r].itemName.Equals(res.list[i].dataName))
-                    {
-                        _shopItems[r].isBought = true;
-                        break;
-                    }
-    }
-
     private void ResetPourchases()
     {
-        for (int i = 0; i < _shopItems.Count; ++i)
-            _shopItems[i].isBought = false;
+        if (items.IsUnityNull())
+            return;
+
+        for (int i = 0; i < items.Count; ++i)
+            items[i].isBought = false;
+    }
+
+    private void InitPurchases()
+    {
+        PurchaseDatalist<PurchaseItem> res = UserData.instance.GetPurcahsesList();
+        items = UserData.instance.GetShopItemSOs();
+
+        for (int i = 0; i < items.Count; ++i)
+            if (res.ContainsPurchaseItem(items[i].itemName))
+                items[i].isBought = true;
     }
 
     public void OnPurshaseUpdate()
     {
-        var currentItem = _shopItems[_currentPurshaceId];
+        var currentItem = items[_currentPurshaceId];
 
         _purchaseImage.sprite = currentItem.itemSprite;
         _purchaseTitle.text = currentItem.itemName;
@@ -66,7 +64,7 @@ public class ShopViewer : MonoBehaviour
 
     public void SwitchToNext()
     {
-        if (_currentPurshaceId + 1 >= _shopItems.Count)
+        if (_currentPurshaceId + 1 >= items.Count)
             _currentPurshaceId = 0;
         else
             _currentPurshaceId++;
@@ -77,30 +75,28 @@ public class ShopViewer : MonoBehaviour
     public void SwitchToPrevious()
     {
         if (_currentPurshaceId - 1 < 0)
-            _currentPurshaceId = _shopItems.Count - 1;
+            _currentPurshaceId = items.Count - 1;
         else
             _currentPurshaceId--;
 
         OnPurshaseUpdate();
     }
 
-    public ShopItemSO GetCurrentShopItem() => _shopItems[_currentPurshaceId];
-
     public void OnActivateButtonClicked()
     {
-        _shopItems[_currentPurshaceId].isActivate = true;
+        items[_currentPurshaceId].isActivate = true;
         SetActivateColorStatus();
     }
 
     public void OnDeactivateButtonClicked()
     {
-        _shopItems[_currentPurshaceId].isActivate = false;
+        items[_currentPurshaceId].isActivate = false;
         SetActivateColorStatus();
     }
 
     private void SetActivateColorStatus()
     {
-        if (_shopItems[_currentPurshaceId].isActivate)
+        if (items[_currentPurshaceId].isActivate)
         {
             _activateButton.GetComponent<Image>().color = _DEFAULT_SELECTION_COLOR;
             _deactivateButton.GetComponent<Image>().color = _DEFAULT_COLOR;
@@ -111,4 +107,6 @@ public class ShopViewer : MonoBehaviour
             _deactivateButton.GetComponent<Image>().color = _DEFAULT_SELECTION_COLOR;
         }
     }
+
+    public ShopItemSO GetCurrentShopItem() => items[_currentPurshaceId];
 }

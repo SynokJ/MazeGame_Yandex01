@@ -26,6 +26,12 @@ mergeInto(LibraryManager.library, {
   },
 
   SaveExtern: function (date) {
+    if(player == null)
+    {
+      console.log('player is not inited!');
+      return;
+    }
+
     var dateString = UTF8ToString(date);
     var myobj = JSON.parse(dateString);
     player.setData(myobj);
@@ -42,6 +48,8 @@ mergeInto(LibraryManager.library, {
       myGameInstance.SendMessage('User Manager', 'SetPlayerInfo', myJson);
       console.log('player info is inited');
     });
+
+    console.log('LoadExternFinished!')
   },
 
 });

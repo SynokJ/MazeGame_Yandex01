@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 
@@ -21,15 +20,33 @@ public class UserData : MonoBehaviour
     }
     #endregion
 
-    private const string _FIRST_ITEM_NAME = "Map Modifier";
-    private const string _SECOND_ITEM_NAME = "Player Modifier";
-    private const string _THIRD_ITEM_NAME = "The One Of Us";
+    [SerializeField] private List<ShopItemSO> _shopItemSOs = new List<ShopItemSO>();
 
     private static int _coinAmount = 0;
     private PurchaseDatalist<PurchaseItem> _purchases = new PurchaseDatalist<PurchaseItem>();
 
     public int CoinAmount { get => _coinAmount; private set { } }
     private static string jsonRes = default;
+
+    public void InitSavedPurchases(PlayerInfo info)
+    {
+        _coinAmount = info.coinAmount;
+        _purchases.ClearPurchases();
+
+        _shopItemSOs[0].isBought = info.firstItem;
+        _shopItemSOs[1].isBought = info.secondItem;
+        _shopItemSOs[2].isBought = info.thirdItem;
+
+        PurchaseItem tempItem = default;
+
+        for (int i = 0; i < _shopItemSOs.Count; ++i)
+            if (_shopItemSOs[i].isBought)
+            {
+                tempItem = new PurchaseItem();
+                tempItem.dataName = _shopItemSOs[i].itemName;
+                _purchases.AddItem(tempItem);
+            }
+    }
 
     public void DecreaseCoins(int num)
     {
@@ -39,14 +56,6 @@ public class UserData : MonoBehaviour
             _coinAmount = 0;
     }
 
-    public void IncreaseCoins(int num)
-    {
-        _coinAmount += num;
-        Debug.Log($"Coin Num Increased: {_coinAmount}");
-    }
-
-    public void AddPurchase(PurchaseItem data) => _purchases.AddItem(data);
-
     public void SavePurchases()
     {
         jsonRes = JsonUtility.ToJson(_purchases);
@@ -54,51 +63,20 @@ public class UserData : MonoBehaviour
         PlayerInfo playerInfo = new PlayerInfo();
 
         playerInfo.coinAmount = _coinAmount;
-        playerInfo.firstItem = _purchases.list[0].dataName.Equals(_FIRST_ITEM_NAME);
 
-        if (_purchases.list.Count == 2)
-            playerInfo.secondItem = _purchases.list[1].dataName.Equals(_SECOND_ITEM_NAME);
-
-        if (_purchases.list.Count == 3)
-            playerInfo.thirdItem = _purchases.list[2].dataName.Equals(_THIRD_ITEM_NAME);
+        playerInfo.firstItem = _purchases.ContainsPurchaseItem(_shopItemSOs[0].itemName);
+        playerInfo.secondItem = _purchases.ContainsPurchaseItem(_shopItemSOs[1].itemName);
+        playerInfo.thirdItem = _purchases.ContainsPurchaseItem(_shopItemSOs[2].itemName);
 
         UserProgressManager.Instance.SetPlayerData(playerInfo);
+        UserProgressManager.Instance.Save();
     }
 
+    public void IncreaseCoins(int num) => _coinAmount += num;
+    public List<ShopItemSO> GetShopItemSOs() => _shopItemSOs;
     public void SetCoinAmount(int coins) => _coinAmount = coins;
-
-    public string GetBoughtList() => jsonRes;
-    public bool TryGetPurchase(ShopItemSO item)
-    {
-        if (_purchases.list == null || _purchases.list.Count == 0)
-            return false;
-
-        if (item == null)
-            return false;
-
-        for (int i = 0; i < _purchases.list.Count; ++i)
-            if (item.itemName.Equals(_purchases.list[i].dataName))
-                return true;
-
-        return false;
-    }
-
-}
-
-[System.Serializable]
-public class PurchaseItem
-{
-    public string dataName;
-}
-
-[System.Serializable]
-public class PurchaseDatalist<T>
-{
-    public List<T> list = new List<T>();
-
-    public void AddItem(T item)
-    {
-        if (!list.Contains(item))
-            list.Add(item);
-    }
+    public void AddPurchase(PurchaseItem data) => _purchases.AddItem(data);
+    public PurchaseDatalist<PurchaseItem> GetPurcahsesList() => _purchases;
+    public void AddCoinsInRange(int max, int min) => _coinAmount += Random.Range(min, max);
+    public bool TryGetPurchase(ShopItemSO item) => _purchases.ContainsPurchaseItem(item.name);
 }
