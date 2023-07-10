@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9444891bcc8689d4b918bd4f289207da, type: 3}
-  m_Name: MapModifier
+  m_Name: Joil
   m_EditorClassIdentifier: 
-  itemName: Map Modifier
-  itemSprite: {fileID: -1299700068, guid: af4c91dc132c8164686531b26c33e397, type: 3}
-  itemCost: 0
+  itemName: Joil
+  itemCost: 1500
   isBought: 0
   isActivate: 0
+  itemSprite: {fileID: 619268325, guid: d4d02c19336fdd342b53910dfc236023, type: 3}
+  type: 1

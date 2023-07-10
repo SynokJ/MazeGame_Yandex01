@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9444891bcc8689d4b918bd4f289207da, type: 3}
-  m_Name: PlayerModifier
+  m_Script: {fileID: 11500000, guid: 83bcceb4bda33064bae85cbaa7a841a0, type: 3}
+  m_Name: Ellie
   m_EditorClassIdentifier: 
-  itemName: Player Modifier
-  itemSprite: {fileID: 21300000, guid: e5600378dd761e64d9423790c482bf36, type: 3}
-  itemCost: 200
-  isBought: 0
-  purchaseItem: {fileID: 0}
+  playerGFX: {fileID: 8293780190885699051, guid: 892eb94db1d04b2438c046e544978a83, type: 3}

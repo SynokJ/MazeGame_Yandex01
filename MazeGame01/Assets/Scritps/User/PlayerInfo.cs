@@ -5,6 +5,8 @@ public class PlayerInfo
     public bool firstItem;
     public bool secondItem;
     public bool thirdItem;
+    public bool fourthItem;
+    public bool fifthItem;
 
     public PlayerInfo()
     {
@@ -12,7 +14,10 @@ public class PlayerInfo
         firstItem = false;
         secondItem = false;
         thirdItem = false;
+        fourthItem = false;
+        fifthItem = false;
     }
 
-    public override string ToString() => $"coins: {coinAmount}, first: {firstItem}, second: {secondItem}, third: {thirdItem}";
+    public override string ToString() 
+        => $"coins: {coinAmount}, first: {firstItem}, second: {secondItem}, third: {thirdItem},  fourth: {fourthItem}, fifth: {fifthItem}";
 }

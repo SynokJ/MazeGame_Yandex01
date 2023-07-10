@@ -67,16 +67,31 @@ public class UserData : MonoBehaviour
         playerInfo.firstItem = _purchases.ContainsPurchaseItem(_shopItemSOs[0].itemName);
         playerInfo.secondItem = _purchases.ContainsPurchaseItem(_shopItemSOs[1].itemName);
         playerInfo.thirdItem = _purchases.ContainsPurchaseItem(_shopItemSOs[2].itemName);
+        playerInfo.fourthItem = _purchases.ContainsPurchaseItem(_shopItemSOs[3].itemName);
+        playerInfo.fifthItem = _purchases.ContainsPurchaseItem(_shopItemSOs[4].itemName);
 
         UserProgressManager.Instance.SetPlayerData(playerInfo);
         UserProgressManager.Instance.Save();
     }
 
-    public void IncreaseCoins(int num) => _coinAmount += num;
-    public List<ShopItemSO> GetShopItemSOs() => _shopItemSOs;
-    public void SetCoinAmount(int coins) => _coinAmount = coins;
-    public void AddPurchase(PurchaseItem data) => _purchases.AddItem(data);
-    public PurchaseDatalist<PurchaseItem> GetPurcahsesList() => _purchases;
-    public void AddCoinsInRange(int max, int min) => _coinAmount += Random.Range(min, max);
-    public bool TryGetPurchase(ShopItemSO item) => _purchases.ContainsPurchaseItem(item.name);
+    public void IncreaseCoins(int num) 
+        => _coinAmount += num;
+
+    public List<ShopItemSO> GetShopItemSOs() 
+        => _shopItemSOs;
+
+    public void SetCoinAmount(int coins) 
+        => _coinAmount = coins;
+
+    public void AddPurchase(PurchaseItem data) 
+        => _purchases.AddItem(data);
+
+    public PurchaseDatalist<PurchaseItem> GetPurcahsesList() 
+        => _purchases;
+    
+    public void AddCoinsInRange(int max, int min) 
+        => _coinAmount += Random.Range(min, max);
+    
+    public bool TryGetPurchase(ShopItemSO item) 
+        => _purchases.ContainsPurchaseItem(item.name);
 }

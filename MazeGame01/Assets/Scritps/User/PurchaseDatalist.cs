@@ -3,7 +3,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class PurchaseDatalist<T>
 {
-    public List<T> list = new List<T>();
+    public List<T> list = null;
 
     public PurchaseDatalist()
     {
@@ -19,7 +19,7 @@ public class PurchaseDatalist<T>
     {
         PurchaseItem tempItem = item as PurchaseItem;
 
-        if (!ContainsPurchaseItem(tempItem.dataName))
+        if (tempItem != null && !ContainsPurchaseItem(tempItem.dataName))
             list.Add(item);
     }
 
@@ -40,5 +40,6 @@ public class PurchaseDatalist<T>
         return false;
     }
 
-    public void ClearPurchases() => list.Clear();
+    public void ClearPurchases() 
+        => list.Clear();
 }

@@ -6,9 +6,13 @@ using UnityEngine;
 public class ShopItemSO : ScriptableObject
 {
 
+    [Header("Shot Item Parameters:")]
     public string itemName;
-    public Sprite itemSprite;
     public int itemCost;
     public bool isBought;
     public bool isActivate;
+
+    [Header("Shop Item Components:")]
+    public Sprite itemSprite;
+    public ShopViewer.ShopItemType type;
 }

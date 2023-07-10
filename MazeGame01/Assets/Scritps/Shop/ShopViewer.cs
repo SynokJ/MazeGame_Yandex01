@@ -5,15 +5,22 @@ using UnityEngine.UI;
 
 public class ShopViewer : MonoBehaviour
 {
+    public enum ShopItemType
+    {
+        buff = 0,
+        skin = 1
+    }
 
     [Header("Purchase Components:")]
     [SerializeField] private Image _purchaseImage;
     [SerializeField] private TMPro.TextMeshProUGUI _purchaseTitle;
     [SerializeField] private TMPro.TextMeshProUGUI _purchaseCost;
 
+    [Header("Purchase Buttons:")]
     [SerializeField] private GameObject _buyButton;
     [SerializeField] private GameObject _activateButton;
     [SerializeField] private GameObject _deactivateButton;
+    [SerializeField] private GameObject _selectButton;
 
     private List<ShopItemSO> items = new List<ShopItemSO>();
     private int _currentPurshaceId = 0;
@@ -56,10 +63,23 @@ public class ShopViewer : MonoBehaviour
         _purchaseCost.text = currentItem.itemCost.ToString();
 
         _buyButton.SetActive(!currentItem.isBought);
-        _activateButton.SetActive(currentItem.isBought);
-        _deactivateButton.SetActive(currentItem.isBought);
 
-        SetActivateColorStatus();
+        switch (currentItem.type)
+        {
+            case ShopItemType.buff:
+                _activateButton.SetActive(currentItem.isBought);
+                _deactivateButton.SetActive(currentItem.isBought);
+                _selectButton.SetActive(false);
+                SetActivateColorStatus();
+                break;
+
+            case ShopItemType.skin:
+                _selectButton.SetActive(currentItem.isBought);
+                _activateButton.SetActive(false);
+                _deactivateButton.SetActive(false);
+                SetSelectButtonColorStatus();
+                break;
+        }
     }
 
     public void SwitchToNext()
@@ -92,6 +112,20 @@ public class ShopViewer : MonoBehaviour
     {
         items[_currentPurshaceId].isActivate = false;
         SetActivateColorStatus();
+    }
+
+    public void OnSelectButtonClicked()
+    {
+        items[_currentPurshaceId].isActivate = true;
+        SetSelectButtonColorStatus();
+    }
+
+    private void SetSelectButtonColorStatus()
+    {
+        if (items[_currentPurshaceId].isActivate)
+            _selectButton.GetComponent<Image>().color = _DEFAULT_SELECTION_COLOR;
+        else
+            _selectButton.GetComponent<Image>().color = _DEFAULT_COLOR;
     }
 
     private void SetActivateColorStatus()

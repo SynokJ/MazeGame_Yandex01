@@ -2,7 +2,6 @@ public class Maze
 {
 
     private const int _MAZE_SIZE = 11;
-    private const int _MAZE_SCALE = 10;
 
     private Cell[,] _data = new Cell[_MAZE_SIZE, _MAZE_SIZE];
 

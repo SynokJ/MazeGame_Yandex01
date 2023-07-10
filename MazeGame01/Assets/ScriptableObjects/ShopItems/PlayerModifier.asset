@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9444891bcc8689d4b918bd4f289207da, type: 3}
-  m_Name: ZombiePuck
+  m_Name: PlayerModifier
   m_EditorClassIdentifier: 
-  itemName: The One Of Us
-  itemSprite: {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
-  itemCost: 1000
+  itemName: Player Modifier
+  itemSprite: {fileID: 21300000, guid: dcea51d6065d64246aeec467afeff684, type: 3}
+  itemCost: 200
+  isBought: 0
+  isActivate: 0

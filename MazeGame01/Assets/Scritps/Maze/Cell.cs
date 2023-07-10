@@ -23,7 +23,8 @@ public class Cell
 
     private const int _NEIGHBOUR_AMOUNT = 4;
     private Cell[] _neighbours = new Cell[_NEIGHBOUR_AMOUNT];
-    private System.Collections.Generic.List<UnityEngine.GameObject> _walls = new System.Collections.Generic.List<UnityEngine.GameObject>();
+    private System.Collections.Generic.List<UnityEngine.GameObject> _walls 
+        = new System.Collections.Generic.List<UnityEngine.GameObject>();
 
     private Cell _parentCell;
 
@@ -215,11 +216,20 @@ public class Cell
         return true;
     }
 
-    public void SetType(CellType type) => _type = type;
-    public void SetParent(Cell parent) => _parentCell = parent;
-    public CellType GetType() => _type;
-    public Cell GetParent() => _parentCell;
-    public override string ToString() => $"[{posY}, {posX}]";
+    public void SetType(CellType type) 
+        => _type = type;
+
+    public void SetParent(Cell parent) 
+        => _parentCell = parent;
+
+    public CellType GetType() 
+        => _type;
+
+    public Cell GetParent() 
+        => _parentCell;
+
+    public override string ToString() 
+        => $"[{posY}, {posX}]";
 
     public void PrintNeighbours()
     {

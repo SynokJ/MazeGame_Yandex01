@@ -26,30 +26,32 @@ mergeInto(LibraryManager.library, {
   },
 
   SaveExtern: function (date) {
-    if(player == null)
+    if(player === null)
     {
-      console.log('player is not inited!');
+      console.log('PLAYER IS NOT INITED!');
       return;
     }
 
     var dateString = UTF8ToString(date);
     var myobj = JSON.parse(dateString);
     player.setData(myobj);
+
+    console.log('PLAYER DATA IS SAVED');
   },
 
   LoadExtern: function () {
-    if(player == null){
-      console.log('player is not inited!');
+    if(player === null){
+      console.log('PLAYER IS NOT INITED!');
+      myGameInstance.SendMessage('AuthButtonController', 'OnAuthNotSuccessed');
       return;
     }
 
     player.getData().then(_date => {
       const myJson = JSON.stringify(_date);
       myGameInstance.SendMessage('User Manager', 'SetPlayerInfo', myJson);
-      console.log('player info is inited');
     });
 
-    console.log('LoadExternFinished!')
+    console.log('PLAYER DATA IS LOADED!')
   },
 
 });

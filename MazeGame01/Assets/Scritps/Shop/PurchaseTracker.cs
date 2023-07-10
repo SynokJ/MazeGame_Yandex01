@@ -38,5 +38,6 @@ public class PurchaseTracker : MonoBehaviour
         UserProgressManager.Instance.Save();
     }
 
-    private void UpdateMoneyText() => _currentMoney.text = UserData.instance.CoinAmount.ToString();
+    private void UpdateMoneyText() 
+        => _currentMoney.text = UserData.instance.CoinAmount.ToString();
 }

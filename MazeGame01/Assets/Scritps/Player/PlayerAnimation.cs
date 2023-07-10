@@ -2,11 +2,23 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
+    [Header("Animation Components:")]
+    [SerializeField] private GameObject _playerGFX;
 
-    [SerializeField] private Animator _anim;
+    private Animator _anim = default;
+    private bool _isAnimInited = false;
+
+    public void InitAnim()
+    {
+        _anim = _playerGFX.GetComponentInChildren<Animator>();
+        _isAnimInited = !(_anim == null);
+    }
 
     public void PlayAnimByDir(Vector2 dir)
     {
+        if (!_isAnimInited)
+            return;
+
         if (dir.x > 0.01f && !_anim.GetBool("move_right"))
         {
             _anim.SetBool("move_left", false);
